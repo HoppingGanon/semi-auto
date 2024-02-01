@@ -1,10 +1,11 @@
 <script>
+	import '../app.pcss';
 	import Header from './Header.svelte';
 	import './styles.css';
 </script>
 
 <div class="app">
-	<Header />
+	<Header></Header>
 
 	<main>
 		<slot />
@@ -12,6 +13,10 @@
 
 	<footer>
 		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	
+		<p class="text-3xl font-bold underline">
+		AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		</p>
 	</footer>
 </div>
 
