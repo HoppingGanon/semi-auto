@@ -1,0 +1,19 @@
+// ブレークポイントのマップ
+$breakpoints: (
+	'sm': 'screen and (min-width: 640px)',
+	'md': 'screen and (min-width: 768px)',
+	'lg': 'screen and (min-width: 1024px)',
+	'xl': 'screen and (min-width: 1280px)',
+	'2xl': 'screen and (min-width: 1536px)'
+);
+
+// メディアクエリのミックスイン
+@mixin media($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media #{map-get($breakpoints, $breakpoint)} {
+			@content;
+		}
+	} @else {
+		@warn "The breakpoint `#{$breakpoint}` does not exist in the map.";
+	}
+}

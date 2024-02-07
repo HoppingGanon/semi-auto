@@ -1,15 +1,15 @@
 {
-  "autorun": true,
-  "terminals": [
-    {
-      "name": "ubuntu1",
-      "focus": true,
-      "command": "ubuntu run 'cd /mnt/d/Develop/Source/web/skeleton-md & bash'"
-    },
-    {
-      "name": "ubuntu2",
-      "focus": true,
-      "command": "ubuntu run 'cd /mnt/d/Develop/Source/web/skeleton-md & bash'"
-    }
-  ]
+	"autorun": true,
+	"terminals": [
+		{
+			"name": "ubuntu1",
+			"focus": true,
+			"command": "ubuntu run 'cd /mnt/d/Develop/Source/web/semi-auto & bash'"
+		},
+		{
+			"name": "ubuntu2",
+			"focus": true,
+			"command": "ubuntu run 'cd /mnt/d/Develop/Source/web/semi-auto & bash'"
+		}
+	]
 }

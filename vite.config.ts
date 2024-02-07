@@ -3,10 +3,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	server:{
-		watch:{
+	server: {
+		watch: {
 			usePolling: true,
-			interval: 1000,
+			interval: 100
 		}
 	}
 });
