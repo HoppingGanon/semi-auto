@@ -5,10 +5,10 @@
 </script>
 
 <section>
-	<div class={'input-container ' + className}>
-		<input type="text" id="text-field" bind:value placeholder=" " />
-		<label for="text-field">{label}</label>
-	</div>
+		<div class={`${className} input-container w-full`}>
+			<input type="text" bind:value placeholder=" " />
+			<label for="text-field">{label}</label>
+		</div>
 </section>
 
 <style>
