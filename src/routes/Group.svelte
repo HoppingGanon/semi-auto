@@ -8,8 +8,7 @@
 	{#if title}
 		<div class="text-center">
 			<div class="title">
-				<div class={`title2 px-5 text-md font-bold ${bgColor}`}>
-
+				<div class={`title2 text-md px-5 font-bold ${bgColor}`}>
 					{title}
 				</div>
 			</div>
@@ -28,7 +27,6 @@
 	}
 
 	div.title2 {
-		
 		display: inline-block;
 	}
 

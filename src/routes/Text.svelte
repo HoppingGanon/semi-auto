@@ -1,14 +1,35 @@
 <script lang="ts">
 	export let label = 'Label';
-	export let value = '';
+	export let value: string = '';
 	export let className = '';
+	export let textType: 'text' | 'number' = 'text';
+
+	const setter = (event: Event) => {
+		const inputElement = event.target as HTMLInputElement;
+		if (inputElement) {
+			const v = inputElement.value;
+			if (textType === 'text') {
+				value = v;
+			} else if (textType === 'number') {
+				if (Number.isNaN(v)) {
+					value = v;
+				} else {
+					value = v;
+				}
+			}
+		}
+	};
+
+	$: displayedValue = textType === 'number' ? value.toString() : value;
+
+	const id = `text-${crypto.randomUUID()}`;
 </script>
 
 <section>
-		<div class={`${className} input-container w-full`}>
-			<input type="text" bind:value placeholder=" " />
-			<label for="text-field">{label}</label>
-		</div>
+	<div class={`${className} input-container w-full`}>
+		<input {id} type={textType} value={displayedValue} placeholder=" " on:input={setter} />
+		<label for={id}>{label}</label>
+	</div>
 </section>
 
 <style>
