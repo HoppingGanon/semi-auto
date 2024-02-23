@@ -1,32 +1,34 @@
-import { writable } from 'svelte/store';
+import { persisted } from 'svelte-persisted-store';
 
-export const simulationYears = writable('1000');
-export const actionPerMonth = writable('2');
+export default persisted('preferences', {
+	simulationYears: '5000',
+	actionPerMonth: '2',
 
-export const initPredCount = writable('50');
-export const predLife = writable('5');
-export const predSurvivalRate = writable('100');
-export const predBreedingSpan = writable('1');
-export const predBreedingAge = writable('3');
-export const predSpawningMin = writable('3');
-export const predSpawningMax = writable('7');
-export const predEatingRate = writable('0.5');
-export const predEatingMin = writable('1');
-export const predEatingMax = writable('3');
-export const predBreedingRate = writable('100');
+	initPredCount: '50',
+	predLife: '5',
+	predSurvivalRate: '100',
+	predBreedingSpan: '2',
+	predBreedingAge: '3',
+	predSpawningMin: '2',
+	predSpawningMax: '6',
+	predEatingRate: '0.5',
+	predEatingMin: '1',
+	predEatingMax: '10',
+	predBreedingRate: '100',
 
-export const initSemiCount = writable('5000');
-export const initSemiMinLife = writable('1');
-export const initSemiMaxLife = writable('15');
-export const semiSurvivalRate = writable('97');
-export const semiMutationRate = writable('1');
-export const semiSpawningMin = writable('2');
-export const semiSpawningMax = writable('3');
-export const semiBreedingRate = writable('100');
+	initSemiCount: '3000',
+	initSemiMinLife: '1',
+	initSemiMaxLife: '15',
+	semiSurvivalRate: '100',
+	semiMutationRate: '1',
+	semiSpawningMin: '2',
+	semiSpawningMax: '4',
+	semiBreedingRate: '100',
 
-export const initPreyCount = writable('1000');
-export const preySurvivalRate = writable('100');
-export const preySpawningMin = writable('0');
-export const preySpawningMax = writable('0');
-export const preyBreedingRate = writable('0');
-export const preyAdoptCount = writable('1000');
+	initPreyCount: '500',
+	preySurvivalRate: '100',
+	preySpawningMin: '0',
+	preySpawningMax: '0',
+	preyBreedingRate: '0',
+	preyAdoptCount: '500'
+});

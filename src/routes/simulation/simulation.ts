@@ -1,4 +1,4 @@
-const DEBUG = true;
+export const DEBUG = false;
 
 interface ActionLog {
 	yearCount: number;
@@ -17,7 +17,8 @@ type ActionReport = { [key: string]: DetailsReport };
 type YearReport = {
 	[actionNumber: number]: ActionReport;
 };
-type Report = { [yearCount: number]: YearReport };
+
+export type Report = { [yearCount: number]: YearReport };
 
 export class Ecosystem {
 	private _simulationYears = 100000;
@@ -147,6 +148,20 @@ export class Ecosystem {
 	get breedablePreysCount() {
 		return this._preys.filter((p) => !p.wasBreeded).length;
 	}
+	get actionPerMonth() {
+		return this._actionPerMonth;
+	}
+
+	get predatorsCount() {
+		return this._predators.length;
+	}
+	get semisCount() {
+		return this._semis.length;
+	}
+	get preysCount() {
+		return this._preys.length;
+	}
+
 	get livingPreyCount() {
 		return this._preys.filter((p) => !p.isDied).length;
 	}
@@ -304,7 +319,7 @@ export class Ecosystem {
 	}
 
 	shuffle() {
-		this._shuffledPreys = (this._semis.filter((s) => s.isBreedable()) as LivingTthing[]).concat(
+		this._shuffledPreys = (this._semis.filter((s) => s.isBreedable(this)) as LivingTthing[]).concat(
 			this._preys
 		);
 		this._shuffledPreys.forEach((p) => {
@@ -497,7 +512,7 @@ abstract class LivingTthing {
 
 	/** 年末アクション実行 */
 	doLastAction(ecosystem: Ecosystem, callBack: (ecosystem: Ecosystem) => void) {
-		if (this.isBreedable()) {
+		if (this.isBreedable(ecosystem)) {
 			// パートナー番号
 			const partner = challengeN(this._breedingRate, this.breedableCount(ecosystem));
 			if (partner !== -1) {
@@ -517,11 +532,12 @@ abstract class LivingTthing {
 		}
 	}
 
-	isBreedable() {
+	isBreedable(ecosystem: Ecosystem) {
 		return (
 			!this.wasBreeded &&
 			this._age + 1 >= this._breedingAge &&
-			(this._age + 1 - this._breedingAge) % this._breedingSpan === 0
+			(this._age + 1 - this._breedingAge) % this._breedingSpan === 0 &&
+			ecosystem.actionNumber === ecosystem.actionPerMonth - 1
 		);
 	}
 
