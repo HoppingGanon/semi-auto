@@ -1,8 +1,9 @@
 import { persisted } from 'svelte-persisted-store';
 
 export default persisted('preferences', {
-	simulationYears: '5000',
+	simulationYears: '100',
 	actionPerMonth: '2',
+	breedingLimit: '10000',
 
 	initPredCount: '50',
 	predLife: '5',

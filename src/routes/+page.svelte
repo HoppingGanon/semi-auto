@@ -15,6 +15,7 @@
 		new Ecosystem({
 			simulationYears: Number.parseFloat($store.simulationYears),
 			actionPerMonth: Number.parseFloat($store.actionPerMonth),
+			breedingLimit: Number.parseFloat($store.breedingLimit),
 			initPredCount: Number.parseFloat($store.initPredCount),
 			predLife: Number.parseFloat($store.predLife),
 			predSurvivalRate: Number.parseFloat($store.predSurvivalRate),
@@ -119,6 +120,9 @@
 							bind:value={$store.actionPerMonth}
 							textType="number"
 						/>
+					</div>
+					<div class="inline-block w-full py-1 md:w-[49%]">
+						<Text label="繁殖上限個体数" bind:value={$store.breedingLimit} textType="number" />
 					</div>
 					<div class="inline-block w-full py-1 md:w-[49%]"></div>
 				</div>
@@ -252,28 +256,34 @@
 				</div>
 			</Group>
 
-			<!--a href="/simulation">
-				<input class="styled bg-slate-600 hover:bg-slate-500 active:bg-slate-400 text-white" type="button" value="シミュレーション開始">
-			</a-->
+			<a href="/simulation">
+				<input
+					class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
+					type="button"
+					value="シミュレーション開始"
+				/>
+			</a>
 
-			<!-- input
+			{#if DEBUG}
+				<!-- input
 				class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
 				type="button"
 				value="生成"
 				on:click={doSimulation}
 			/-->
-			<input
-				class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
-				type="button"
-				value="1年シミュレーション"
-				on:click={clock}
-			/>
-			<input
-				class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
-				type="button"
-				value="100年シミュレーション"
-				on:click={clock100}
-			/>
+				<input
+					class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
+					type="button"
+					value="1年シミュレーション"
+					on:click={clock}
+				/>
+				<input
+					class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
+					type="button"
+					value="100年シミュレーション"
+					on:click={clock100}
+				/>
+			{/if}
 			<input
 				class="styled bg-slate-600 text-white hover:bg-slate-500 active:bg-slate-400"
 				type="button"

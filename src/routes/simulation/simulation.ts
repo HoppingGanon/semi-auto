@@ -18,11 +18,20 @@ type YearReport = {
 	[actionNumber: number]: ActionReport;
 };
 
+export interface CountData {
+	semis: { [key: number]: number };
+	semisSum: number;
+	pred: number;
+	prey: number;
+}
+
 export type Report = { [yearCount: number]: YearReport };
 
 export class Ecosystem {
 	private _simulationYears = 100000;
 	private _actionPerMonth = 12;
+	private _breedingLimit = 10000;
+	isStoped = false;
 
 	private _predators: Predator[] = [];
 	private _semis: Semi[] = [];
@@ -43,6 +52,8 @@ export class Ecosystem {
 	constructor(args: {
 		simulationYears: number;
 		actionPerMonth: number;
+		breedingLimit: number;
+
 		initPredCount: number;
 		predLife: number;
 		predSurvivalRate: number;
@@ -76,6 +87,7 @@ export class Ecosystem {
 		this._preySpawningMin = args.preySpawningMin;
 		this._preySpawningMax = args.preySpawningMax;
 		this._preyBreesingRate = args.preyBreedingRate;
+		this._breedingLimit = args.breedingLimit;
 
 		this._yearCount = 0;
 		for (let i = 0; i < args.initPredCount; i++) {
@@ -192,6 +204,18 @@ export class Ecosystem {
 	}
 
 	doYear() {
+		if (this.isStoped) {
+			return false;
+		}
+		if (
+			this._breedingLimit < this.semisCount ||
+			this._breedingLimit < this.predatorsCount ||
+			this._breedingLimit < this.preysCount
+		) {
+			this.isStoped = true;
+			return false;
+		}
+
 		if (this._yearCount < this._simulationYears) {
 			for (
 				this._actionNumber = 0;
@@ -221,6 +245,7 @@ export class Ecosystem {
 			this._yearCount++;
 			return true;
 		} else {
+			this.isStoped = true;
 			return false;
 		}
 	}
@@ -304,6 +329,10 @@ export class Ecosystem {
 			preys: true,
 			semis: true
 		});
+	}
+
+	stopAction() {
+		this.isStoped = true;
 	}
 
 	removeDied(args: { predators?: boolean; semis?: boolean; preys?: boolean }) {
@@ -392,6 +421,23 @@ export class Ecosystem {
 		});
 
 		return report;
+	}
+
+	getDistribution() {
+		const data: CountData = {
+			semis: {},
+			semisSum: 0,
+			pred: 0,
+			prey: 0
+		};
+		this._semis.forEach((item) => {
+			data.semis[item.life] = data.semis[item.life] ? data.semis[item.life] + 1 : 1;
+		});
+		data.pred = this._predators.length;
+		data.prey = this._preys.length;
+		data.semisSum = this._semis.length;
+
+		return data;
 	}
 
 	actionLogs: ActionLog[] = [];
@@ -589,7 +635,8 @@ export class Semi extends LivingTthing {
 			if (childLife % 2 === 0) {
 				childLife = childLife / 2;
 			} else {
-				childLife = Math.floor(childLife / 2) + (challenge(50) ? 1 : 0);
+				const rnd = challenge(50) ? 1 : 0;
+				childLife = Math.floor(childLife / 2) + rnd;
 			}
 
 			// 突然変異
